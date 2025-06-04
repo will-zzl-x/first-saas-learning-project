@@ -1,8 +1,10 @@
 import ButtonLogin from "@/components/ButtonLogin";
+import FAQListItem from "@/components/FAQListItem";
 
 function Home() {
   const isLoggedIn = true;
   const name = "Will";
+
   return (
     <main>
       {/* HEADER */}
@@ -10,8 +12,12 @@ function Home() {
         <div className="max-w-3xl mx-auto flex flex-row justify-between items-center px-8 py-4">
           <div className="font-bold"> FirstProject</div>
           <div className="space-x-4 max-md:hidden">
-            <a className="link link-hover">Pricing</a>
-            <a className="link link-hover">FAQ</a>
+            <a className="link link-hover" href="#pricing">
+              Pricing
+            </a>
+            <a className="link link-hover" href="#faq">
+              FAQ
+            </a>
           </div>
           <div>
             <ButtonLogin isLoggedIn={isLoggedIn} name={name} />
@@ -32,7 +38,7 @@ function Home() {
       </section>
 
       {/* PRICING */}
-      <section className="bg-base-200">
+      <section className="bg-base-200" id="pricing">
         <div className="py-32 px-8 max-w-3xl mx-auto">
           <p className="text-sm uppercase font-medium text-center text-primary mb-4">
             Pricing
@@ -40,7 +46,7 @@ function Home() {
           <h2 className="text-3xl lg:text-4xl font-extrabold mb-12 text-center">
             A pricing that adapts to your needs
           </h2>
-          <div className="p-8 bg-base-100 max-w-96 rounded-3xl mx-auto">
+          <div className="space-y-6 p-8 bg-base-100 max-w-96 rounded-3xl mx-auto">
             <div className="flex gap-2 items-baseline">
               <div className="text-4xl font-black">$1.62</div>
               <div className="uppercase text-sm font-medium opacity-60">
@@ -48,31 +54,61 @@ function Home() {
               </div>
             </div>
 
-            <ul>
-              <li>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="1.5"
-                  stroke="currentColor"
-                  class="size-6"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m4.5 12.75 6 6 9-13.5"
-                  />
-                </svg>
-                Unlimited users
-              </li>
-              <li>Collect customer feedback</li>
-              <li>Unlimited boards</li>
-              <li>Admin dashboard</li>
-              <li>24/7 support</li>
+            <ul className="space-y-2">
+              {[
+                "Collect customer feedback",
+                "Unlimited boards",
+                "Admin dashboard",
+                "24/7 support",
+              ].map((priceItem) => {
+                return (
+                  <li className="flex gap-2 items-center" key={priceItem}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="size-4 text-green-600"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m4.5 12.75 6 6 9-13.5"
+                      />
+                    </svg>
+                    {priceItem}
+                  </li>
+                );
+              })}
             </ul>
+            <ButtonLogin
+              isLoggedIn={isLoggedIn}
+              name={name}
+              extraStyle="w-full"
+            />
           </div>
         </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="py-32 px-8 max-w-3xl mx-auto" id="faq">
+        <p className="text-sm uppercase font-medium text-center text-primary mb-4">
+          FAQ
+        </p>
+        <h2 className="text-3xl lg:text-4xl font-extrabold mb-12 text-center">
+          Frequently Asked Questions
+        </h2>
+
+        <ul className="max-w-lg mx-auto">
+          {[
+            { question: "What do I get exactly?", answer: "Loreum Ipseum" },
+            { question: "Can I get a refund?", answer: "Loreum Ipseum" },
+            { question: "I have another question", answer: "Loreum Ipseum" },
+          ].map((qa) => (
+            <FAQListItem key={qa.question} qa={qa} />
+          ))}
+        </ul>
       </section>
     </main>
   );
