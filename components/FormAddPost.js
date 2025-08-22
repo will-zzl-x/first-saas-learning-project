@@ -4,9 +4,10 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const FormNewBoard = () => {
+const FormAddPost = ({ boardId }) => {
   const router = useRouter();
-  const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (event) => {
@@ -16,11 +17,12 @@ const FormNewBoard = () => {
     setIsLoading(true);
 
     try {
-      const data = await axios.post("/api/board", { name });
+      await axios.post(`/api/post?boardId=${boardId}`, { title, description });
 
-      setName("");
+      setTitle("");
+      setDescription("");
 
-      toast.success("Board created:");
+      toast.success("Post Added!");
 
       router.refresh();
     } catch (error) {
@@ -34,29 +36,40 @@ const FormNewBoard = () => {
   };
   return (
     <form
-      className="bg-base-100 p-8 rounded-3xl space-y-8"
+      className="bg-base-100 p-8 rounded-3xl space-y-8 w-full md:w-96 shrink-0 md:sticky md:top-20"
       onSubmit={handleSubmit}
     >
-      <p className="font-bold text-lg">Create a new feedback board</p>
+      <p className="font-bold text-lg">Suggest a feature</p>
       <label className="form-control w-full">
-        <div className="label">
-          <span className="label-text">Board Name</span>
-        </div>
+        <span className="fieldset-legend">Short, descriptive title</span>
+
         <input
           required
           type="text"
           placeholder="Future Viral SaaS"
           className="input input-bordered w-full"
-          value={name}
-          onChange={(event) => setName(event.target.value)}
+          value={title}
+          onChange={(event) => setTitle(event.target.value)}
+          maxLength={100}
         />
+      </label>
+
+      <label className="form-control w-full">
+        <div className="fieldset-legend"> Description</div>
+        <textarea
+          value={description}
+          onChange={(event) => setDescription(event.target.value)}
+          className="textarea textarea-bordered h-24"
+          placeholder="The login button should be more visible"
+          maxLength={1000}
+        ></textarea>
       </label>
 
       <button className="btn btn-primary w-full" type="submit">
         {isLoading && (
           <span className="loading loading-spinner loading-xs"></span>
         )}
-        Create Board
+        Add Post
       </button>
       {/* 1. INPUT */}
       {/* 2. FORM */}
@@ -65,7 +78,7 @@ const FormNewBoard = () => {
   );
 };
 
-export default FormNewBoard;
+export default FormAddPost;
 
 // This component is a placeholder for the form to create a new board.
 // It should be implemented with a form that allows users to input the board name

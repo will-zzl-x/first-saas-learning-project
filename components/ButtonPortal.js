@@ -6,16 +6,17 @@ import toast from "react-hot-toast";
 const ButtonPortal = () => {
   const [isLoading, setIsLoading] = useState(false);
 
+  // create a portal session. Ignore is loading if it's already loading.
+
   const handleBilling = async () => {
     if (isLoading) return;
     setIsLoading(true);
 
     try {
       const response = await axios.post("/api/billing/create-portal");
+      const { url } = response.data;
 
-      const portalUrl = response.data.url;
-
-      window.open(portalUrl, "_blank");
+      window.location.href = url;
       setIsLoading(false);
     } catch (error) {
       const errorMessage =
