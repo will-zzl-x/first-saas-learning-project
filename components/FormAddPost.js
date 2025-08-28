@@ -46,7 +46,7 @@ const FormAddPost = ({ boardId }) => {
         <input
           required
           type="text"
-          placeholder="Future Viral SaaS"
+          placeholder="Subscribe Visibility"
           className="input input-bordered w-full"
           value={title}
           onChange={(event) => setTitle(event.target.value)}
@@ -60,7 +60,7 @@ const FormAddPost = ({ boardId }) => {
           value={description}
           onChange={(event) => setDescription(event.target.value)}
           className="textarea textarea-bordered h-24"
-          placeholder="The login button should be more visible"
+          placeholder="The subscribe button should be more visible"
           maxLength={1000}
         ></textarea>
       </label>
